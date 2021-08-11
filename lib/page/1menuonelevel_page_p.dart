@@ -14,7 +14,11 @@ class MenuOnelevelPageP extends StatelessWidget {
 
   Future fetchMenus() async {
     final url = Uri.parse(
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=3&view=Grid%20view",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Grid%20view",
+      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
+      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Grid%20view",
+      //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
+      //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
     Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
     final response = await http.get(url, headers: header);
@@ -22,8 +26,8 @@ class MenuOnelevelPageP extends StatelessWidget {
     Map<String, dynamic> result = json.decode(response.body);
     records = result['records'];
     // .cast<Map<String, dynamic>>();
-    print("print1");
-    print(records);
+    // print("print1");
+    // print(records);
 
     return records;
 
@@ -38,7 +42,8 @@ class MenuOnelevelPageP extends StatelessWidget {
       body: FutureBuilder(
           future: fetchMenus(),
           builder: (context, snapshot) {
-            print(snapshot);
+            print('snapshot No.=>');
+            print(this.records.length);
 
             if (!snapshot.hasData)
               return Center(
@@ -80,7 +85,9 @@ class MenuOnelevelPageP extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  this.records[index]['fields'].eng,
+                                  this
+                                      .records[index]['fields']['eng']
+                                      .toString(),
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.white),
                                 ),
@@ -89,8 +96,9 @@ class MenuOnelevelPageP extends StatelessWidget {
                                   height: 12,
                                 ),
                                 CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      this.records[index]['fields'].url),
+                                  backgroundImage: NetworkImage(this
+                                      .records[index]['fields']['url']
+                                      .toString()),
                                   radius: 40,
                                 ),
                                 // Text(
@@ -113,3 +121,4 @@ class MenuOnelevelPageP extends StatelessWidget {
     );
   }
 }
+
