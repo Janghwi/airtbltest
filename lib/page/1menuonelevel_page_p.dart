@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../model/menu.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
@@ -73,6 +72,7 @@ class MenuOnelevelPageP extends StatelessWidget {
                       onTap: () => Get.to(MenuTwolevelPage(),
                           arguments: [
                             this.records[index]['fields']['cat1'],
+                            //this.records[index]['fields']['cat1'],
                             this.records[index]['fields']['eng']
                           ],
                           transition: Transition.zoom),
@@ -108,4 +108,3 @@ class MenuOnelevelPageP extends StatelessWidget {
     );
   }
 }
-
