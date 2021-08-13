@@ -68,38 +68,35 @@ class MenuOnelevelPageP extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14)),
-                    child: InkWell(
-                      onTap: () => Get.to(MenuTwolevelPage(),
-                          arguments: [
-                            this.records[index]['fields']['cat1'],
-                            //this.records[index]['fields']['cat1'],
-                            this.records[index]['fields']['eng']
-                          ],
-                          transition: Transition.zoom),
-                      child: Stack(alignment: Alignment.center, children: [
-                        Ink.image(
-                          image: NetworkImage(
-                              this.records[index]['fields']['url'].toString()),
-                          child: InkWell(
-                            onTap: () {},
-                          ),
-                          height: 180,
-                          fit: BoxFit.cover,
+                    child: Stack(alignment: Alignment.center, children: [
+                      Ink.image(
+                        image: NetworkImage(
+                            this.records[index]['fields']['url'].toString()),
+                        child: InkWell(
+                          onTap: () => Get.to(MenuTwolevelPage(),
+                              arguments: [
+                                this.records[index]['fields']['cat1'],
+                                //this.records[index]['fields']['cat1'],
+                                this.records[index]['fields']['eng']
+                              ],
+                              transition: Transition.zoom),
                         ),
-                        Positioned(
-                          top: 16,
-                          right: 16,
-                          left: 16,
-                          child: Text(
-                            this.records[index]['fields']['eng'].toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
+                        height: 180,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 16,
+                        right: 16,
+                        left: 16,
+                        child: Text(
+                          this.records[index]['fields']['eng'].toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
                         ),
-                      ]),
-                    ),
+                      ),
+                    ]),
                   );
                 },
               );
