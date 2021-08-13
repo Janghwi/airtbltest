@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_feed),
           ),
           Tab(
-            text: ' 문법 ',
+            text: ' 그래머 ',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
