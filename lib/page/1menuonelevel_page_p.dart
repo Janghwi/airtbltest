@@ -1,17 +1,24 @@
 import 'dart:convert';
+import 'package:airtable_sheet_phrasestest/widget/color_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
 
 import '2menutwolevel_page_p.dart';
+import '2menutwolevel_page_pwithexp.dart';
 
 class MenuOnelevelPageP extends StatelessWidget {
   List records = [];
+  final style = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+  final style1 = TextStyle(
+    fontSize: 15,
+  );
 
   Future fetchMenus() async {
     final url = Uri.parse(
@@ -54,7 +61,7 @@ class MenuOnelevelPageP extends StatelessWidget {
             else {
               return StaggeredGridView.countBuilder(
                 staggeredTileBuilder: (int idx) =>
-                    new StaggeredTile.count(2, idx.isEven ? 2.3 : 2),
+                    new StaggeredTile.count(2, idx.isEven ? 1.3 : 2),
                 physics: BouncingScrollPhysics(),
                 itemCount: this.records.length,
                 mainAxisSpacing: 1,
@@ -71,11 +78,15 @@ class MenuOnelevelPageP extends StatelessWidget {
                     child: Stack(alignment: Alignment.center, children: [
                       Ink.image(
                         image: NetworkImage(
-                            this.records[index]['fields']['url'].toString()),
+                          this.records[index]['fields']['image_url'].toString(),
+                        ),
+                        // colorFilter: ColorFilters.greyscale,
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.5), BlendMode.dstATop),
                         child: InkWell(
                           onTap: () => Get.to(MenuTwolevelPage(),
                               arguments: [
-                                this.records[index]['fields']['cat1'],
+                                this.records[index]['fields']['go_tbl'],
                                 //this.records[index]['fields']['cat1'],
                                 this.records[index]['fields']['eng']
                               ],
@@ -90,12 +101,28 @@ class MenuOnelevelPageP extends StatelessWidget {
                         left: 16,
                         child: Text(
                           this.records[index]['fields']['eng'].toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
+                          style: GoogleFonts.nanumGothic(
+                            // backgroundColor: Colors.white70,
+                            textStyle: style,
+                            // fontStyle: FontStyle.italic,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
+                      Positioned(
+                        bottom: 12,
+                        right: 5,
+                        // left: 16,
+                        child: Text(
+                          this.records[index]['fields']['topic_no'].toString(),
+                          style: GoogleFonts.nanumGothic(
+                            // backgroundColor: Colors.white70,
+                            textStyle: style1,
+                            // fontStyle: FontStyle.italic,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      )
                     ]),
                   );
                 },

@@ -8,7 +8,7 @@ import 'dart:async';
 
 import '1menuonelevel_page_p.dart';
 
-class MenuTwolevelPage extends StatelessWidget {
+class MenuTwolevelPageExp extends StatelessWidget {
   List records = [];
   double topContainer = 0;
 
@@ -69,49 +69,69 @@ class MenuTwolevelPage extends StatelessWidget {
                       scale = 1;
                     }
                   }
-                  return Opacity(
-                    opacity: scale,
-                    child: Card(
-                      shadowColor: Colors.grey,
-                      elevation: 3,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Ink.image(
-                            image: NetworkImage(
-                              this
-                                  .records[index]['fields']['image_url']
-                                  .toString(),
-                            ),
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.3),
-                                BlendMode.dstATop),
-                            // colorFilter: ColorFilters.greyscale,
-                            child: InkWell(
-                              onTap: () {},
-                            ),
-                            height: 100,
-                            fit: BoxFit.cover,
+                  return ExpansionPanelList(
+                    animationDuration: Duration(milliseconds: 1000),
+                    children: [
+                      ExpansionPanel(
+                        body: Card(
+                          shadowColor: Colors.grey,
+                          elevation: 3,
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          Positioned(
-                            bottom: 16,
-                            right: 16,
-                            left: 16,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Ink.image(
+                                image: NetworkImage(
+                                  this
+                                      .records[index]['fields']['image_url']
+                                      .toString(),
+                                ),
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3),
+                                    BlendMode.dstATop),
+                                // colorFilter: ColorFilters.greyscale,
+                                child: InkWell(
+                                  onTap: () {},
+                                ),
+                                height: 130,
+                                fit: BoxFit.cover,
+                              ),
+                              Positioned(
+                                bottom: 16,
+                                right: 16,
+                                left: 16,
+                                child: Text(
+                                  this
+                                      .records[index]['fields']['eng']
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        headerBuilder: (BuildContext context, bool isExpanded) {
+                          return Container(
+                            padding: EdgeInsets.all(10),
                             child: Text(
                               this.records[index]['fields']['eng'].toString(),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  color: Colors.white),
+                                color: Colors.pink,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                        ],
+                          );
+                        },
+                        isExpanded:
+                            this.records[index]['fields']['eng'].expanded,
                       ),
-                    ),
+                    ],
                   );
                 },
               );
