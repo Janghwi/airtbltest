@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
 
+import '2menutwolevel_page_exp.dart';
 import '2menutwolevel_page_p.dart';
 
 class MenuOnelevelPageP extends StatelessWidget {
@@ -83,7 +84,7 @@ class MenuOnelevelPageP extends StatelessWidget {
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5), BlendMode.dstATop),
                         child: InkWell(
-                          onTap: () => Get.to(MenuTwolevelPage(),
+                          onTap: () => Get.to(MenuTwolevelPageExp(),
                               arguments: [
                                 this.records[index]['fields']['go_tbl'],
                                 //this.records[index]['fields']['cat1'],

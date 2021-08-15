@@ -91,9 +91,7 @@ class MenuTwolevelPage extends StatelessWidget {
                                 Colors.black.withOpacity(0.3),
                                 BlendMode.dstATop),
                             // colorFilter: ColorFilters.greyscale,
-                            child: InkWell(
-                              onTap: () {},
-                            ),
+                            child: InkWell(onTap: () {}),
                             height: 100,
                             fit: BoxFit.cover,
                           ),
