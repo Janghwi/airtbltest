@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import '2menutwolevel_page_exp.dart';
+import '2menutwolevel_page_exp1.dart';
 import '2menutwolevel_page_p.dart';
 
 class MenuOnelevelPageP extends StatelessWidget {
@@ -84,9 +85,10 @@ class MenuOnelevelPageP extends StatelessWidget {
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5), BlendMode.dstATop),
                         child: InkWell(
-                          onTap: () => Get.to(MenuTwolevelPageExp(),
+                          onTap: () => Get.to(MenuTwolevelPageExp1(),
                               arguments: [
                                 this.records[index]['fields']['go_tbl'],
+                                this.records[index]['fields']['go_view'],
                                 //this.records[index]['fields']['cat1'],
                                 this.records[index]['fields']['eng']
                               ],
@@ -100,7 +102,7 @@ class MenuOnelevelPageP extends StatelessWidget {
                         right: 16,
                         left: 16,
                         child: Text(
-                          this.records[index]['fields']['eng'].toString(),
+                          this.records[index]['fields']['jap'].toString(),
                           style: GoogleFonts.nanumGothic(
                             // backgroundColor: Colors.white70,
                             textStyle: style,
