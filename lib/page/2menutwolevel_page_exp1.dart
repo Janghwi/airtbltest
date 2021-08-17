@@ -21,12 +21,13 @@ class _MenuTwolevelPageExp1State extends State<MenuTwolevelPageExp1> {
   String? goTableNo = 'no';
   String? goTableYes = 'yes';
 
-  Future fetchMenus1() async {
+  Future _fetchMenus() async {
     var tblname = Get.arguments[0];
     var viewname = Get.arguments[1];
+    bool loadRemoteDatatSucceed = false;
 
     final url = Uri.parse(
-      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Grid%20view",
+      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
       "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/$tblname?maxRecords=500&view=$viewname",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
@@ -37,8 +38,11 @@ class _MenuTwolevelPageExp1State extends State<MenuTwolevelPageExp1> {
     final response = await http.get(url, headers: header);
 
     Map<String, dynamic> result = json.decode(response.body);
-    records = result['records'];
-
+    try {
+      records = result['records'];
+    } catch (e) {
+      if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
+    }
     // .cast<Map<String, dynamic>>();
     // print("print1");
     // print(records);
@@ -48,23 +52,23 @@ class _MenuTwolevelPageExp1State extends State<MenuTwolevelPageExp1> {
     //return body.map<User>(User.fromJson).toList();
   }
 
+  retryFuture(future, delay) {
+    Future.delayed(Duration(milliseconds: delay), () {
+      future();
+    });
+  }
+
   final GlobalKey<ExpansionTileCardState> cardA = new GlobalKey();
   // final GlobalKey<ExpansionTileCardState> cardB = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text(Get.arguments[2]),
       ),
       body: FutureBuilder(
-          future: fetchMenus1(),
+          future: _fetchMenus(),
           builder: (context, snapshot) {
             print('snapshot No.=>');
             print(this.records.length);

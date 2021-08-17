@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:airtable_sheet_phrasestest/widget/color_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,33 +15,38 @@ import '2menutwolevel_page_exp.dart';
 import '2menutwolevel_page_exp1.dart';
 import '2menutwolevel_page_p.dart';
 
-class MenuOnelevelPageP extends StatelessWidget {
+class MenuOnelevelPage extends StatelessWidget {
   List records = [];
   final style = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
   final style1 = TextStyle(
     fontSize: 15,
   );
 
-  Future fetchMenus() async {
+  Future _fetchMenus() async {
+    bool loadRemoteDatatSucceed = false;
     final url = Uri.parse(
-      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Grid%20view",
+      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
       "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
     Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
-    final response = await http.get(url, headers: header);
-
-    Map<String, dynamic> result = json.decode(response.body);
-    records = result['records'];
-    // .cast<Map<String, dynamic>>();
-    // print("print1");
-    // print(records);
+    try {
+      final response = await http.get(url, headers: header);
+      Map<String, dynamic> result = json.decode(response.body);
+      records = result['records'];
+    } catch (e) {
+      if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
+    }
 
     return records;
+  }
 
-    //return body.map<User>(User.fromJson).toList();
+  retryFuture(future, delay) {
+    Future.delayed(Duration(milliseconds: delay), () {
+      future();
+    });
   }
 
   @override
@@ -49,7 +55,7 @@ class MenuOnelevelPageP extends StatelessWidget {
       // appBar: AppBar(),
       // ignore: unnecessary_null_comparison
       body: FutureBuilder(
-          future: fetchMenus(),
+          future: _fetchMenus(),
           builder: (context, snapshot) {
             print('snapshot No.=>');
             print(this.records.length);

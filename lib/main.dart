@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 // import 'package:staggered_gridview_example/widget/dynamic_size_grid_widget.dart';
 // import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
 
+import 'page/1menuonelevel_page.dart';
 import 'page/1menuonelevel_page_p.dart';
 import 'widget/tabbar_widget.dart';
 
@@ -59,7 +60,7 @@ class MainPage extends StatelessWidget {
           ),
         ],
         children: [
-          MenuOnelevelPageP(),
+          MenuOnelevelPage(),
           MenuOnelevelPageP(),
           MenuOnelevelPageP(),
           MenuOnelevelPageP(),
