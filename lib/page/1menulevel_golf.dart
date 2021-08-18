@@ -15,9 +15,9 @@ import '2menutwolevel_page_exp.dart';
 import '2menutwolevel_page_exp1.dart';
 import '2menutwolevel_page_p.dart';
 
-class MenuOnelevelPage extends StatelessWidget {
+class OnelevelGolf extends StatelessWidget {
   List records = [];
-  final style = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+  final style = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   final style1 = TextStyle(
     fontSize: 15,
   );
@@ -27,7 +27,7 @@ class MenuOnelevelPage extends StatelessWidget {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/golfmenus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -91,7 +91,7 @@ class MenuOnelevelPage extends StatelessWidget {
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5), BlendMode.dstATop),
                         child: InkWell(
-                          onTap: () => Get.to(MenuTwolevelPage(),
+                          onTap: () => Get.to(MenuTwolevelPageExp1(),
                               arguments: [
                                 this.records[index]['fields']['go_tbl'],
                                 this.records[index]['fields']['go_view'],
