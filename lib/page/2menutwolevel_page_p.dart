@@ -3,15 +3,31 @@ import 'package:airtable_sheet_phrasestest/widget/color_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import '1menuonelevel_page_p.dart';
 import 'bottomsheet.dart';
 
-class MenuTwolevelPage extends StatelessWidget {
+class MenuTwolevelPage extends StatefulWidget {
+  @override
+  _MenuTwolevelPageState createState() => _MenuTwolevelPageState();
+}
+
+class _MenuTwolevelPageState extends State<MenuTwolevelPage> {
   List records = [];
+
   double topContainer = 0;
+
+  final style = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+
+  final style1 = TextStyle(
+    fontSize: 18,
+  );
+  bool isVisible = true;
+
+  final key = GlobalKey<ScaffoldState>();
 
   Future _fetchMenus() async {
     var tblname = Get.arguments[0];
@@ -22,7 +38,8 @@ class MenuTwolevelPage extends StatelessWidget {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Grid%20view",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/$tblname?maxRecords=500&view=$viewname",
+      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/$tblname?maxRecords=500&view=$viewname",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/$tblname?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -53,6 +70,7 @@ class MenuTwolevelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       appBar: AppBar(
         title: Text(Get.arguments[1]),
       ),
@@ -73,91 +91,56 @@ class MenuTwolevelPage extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 itemCount: this.records.length,
                 itemBuilder: (BuildContext context, int index) {
-                  double scale = 1.0;
-                  if (topContainer > 0.5) {
-                    scale = index + 0.5 - topContainer;
-                    if (scale < 0) {
-                      scale = 0;
-                    } else if (scale > 1) {
-                      scale = 1;
-                    }
-                  }
-                  return Card(
-                    shadowColor: Colors.grey,
-                    elevation: 3,
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Ink.image(
-                          image: NetworkImage(
-                            this
-                                .records[index]['fields']['image_url']
-                                .toString(),
-                          ),
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.7), BlendMode.dstATop),
-                          // colorFilter: ColorFilters.greyscale,
-                          child: InkWell(
-                            onTap: () => Get.bottomSheet(Container(
-                              height: 400,
-                              color: Colors.grey,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading: new Icon(Icons.photo),
-                                    title: new Text('Photo'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(Icons.music_note),
-                                    title: new Text('Music'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(Icons.videocam),
-                                    title: new Text('Video'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(Icons.share),
-                                    title: new Text('Share'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            )),
-                          ),
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        Positioned(
-                          bottom: 16,
-                          right: 16,
-                          left: 16,
-                          child: Text(
+                  // if (this.records[index]['fields']['isOneLevel'].toString() ==
+                  //     'yes') {
+                  //   isVisible = true;
+                  // }
+
+                  if (index == 0 ||
+                      this.records[index - 1]['fields']['id'] !=
+                          this.records[index]['fields']['id']) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ListTile(
+                          leading: new Icon(Icons.photo),
+                          title: Text(
                             this.records[index]['fields']['eng'].toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
-                                color: Colors.white),
+                            style: GoogleFonts.nanumGothic(
+                              // backgroundColor: Colors.white70,
+                              textStyle: style,
+                              // fontStyle: FontStyle.italic,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
+                        // item,
                       ],
-                    ),
-                  );
+                      // item,
+                      // Text(
+                      //   this.records[index]['fields']['eng'].toString(),
+                      //   style: GoogleFonts.nanumGothic(
+                      //     // backgroundColor: Colors.white70,
+                      //     textStyle: style,
+                      //     // fontStyle: FontStyle.italic,
+                      //     color: Colors.blue,
+                      //   ),
+                      // ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                      child: Text(
+                        this.records[index]['fields']['eng'].toString(),
+                        style: GoogleFonts.nanumGothic(
+                          // backgroundColor: Colors.white70,
+                          textStyle: style1,
+                          // fontStyle: FontStyle.italic,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    );
+                  }
                 },
               );
             }
