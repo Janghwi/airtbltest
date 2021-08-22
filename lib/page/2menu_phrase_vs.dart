@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import '1menu_phrase1.dart';
+import '3list_phrases_flip.dart';
 import 'bottomsheet.dart';
 
 class TwoMenuPhraseVs extends StatefulWidget {
@@ -136,9 +137,15 @@ class _TwoMenuPhraseVsState extends State<TwoMenuPhraseVs> {
                               );
                             } else {
                               return GestureDetector(
-                                onTap: () {
-                                  print("You've tapped me!");
-                                },
+                                onTap: () => Get.to(ListPhrasesFlip(),
+                                    arguments: [
+                                      this.records[index]['fields']['go_tbl'],
+                                      this.records[index]['fields']['go_view'],
+                                      //this.records[index]['fields']['cat1'],
+                                      this.records[index]['fields']
+                                          ['appbar_name']
+                                    ],
+                                    transition: Transition.zoom),
                                 child: Visibility(
                                   visible: isVisible,
                                   maintainState: true,
@@ -167,7 +174,7 @@ class _TwoMenuPhraseVsState extends State<TwoMenuPhraseVs> {
                                           ),
                                           Divider(indent: 16),
                                           Container(
-                                            width: 300,
+                                            width: 280,
                                             child: Text(
                                               this
                                                   .records[index]['fields']
@@ -181,7 +188,7 @@ class _TwoMenuPhraseVsState extends State<TwoMenuPhraseVs> {
                                               ),
                                             ),
                                           ),
-                                          Divider(indent: 150),
+                                          Divider(indent: 10),
                                           Icon(
                                             Icons.golf_course_sharp,
                                           )
