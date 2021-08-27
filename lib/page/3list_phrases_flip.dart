@@ -151,10 +151,10 @@ class CardWidget extends StatelessWidget {
               Text('16',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold)),
               Text('Oct', style: TextStyle(color: Colors.white)),
-              Text('2019', style: TextStyle(color: Colors.white)),
+              Text('2021', style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
@@ -200,6 +200,7 @@ class CardWidget extends StatelessWidget {
 
   Widget _phraseDisplayFront() {
     return Container(
+      color: Colors.amber,
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(bottom: 30, left: 20),
       child: Column(
