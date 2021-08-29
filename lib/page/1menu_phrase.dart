@@ -85,12 +85,13 @@ class OneMenuPhrase extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14)),
                     child: Stack(alignment: Alignment.center, children: [
                       Ink.image(
-                        image: NetworkImage(
-                          this.records[index]['fields']['image_url'].toString(),
-                        ),
+                        // image: NetworkImage(
+                        //   this.records[index]['fields']['image_url'].toString(),
+                        // ),
+                        image: AssetImage('assets/images/012.png'),
                         // colorFilter: ColorFilters.greyscale,
                         colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                            Colors.black.withOpacity(0.7), BlendMode.dstATop),
                         child: InkWell(
                           onTap: () => Get.to(TwoMenuPhraseVs(),
                               arguments: [

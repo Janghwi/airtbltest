@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import '1menu_phrase1.dart';
+import '3list_phrases.dart';
 import '3list_phrases_flip.dart';
+
 import 'bottomsheet.dart';
 
 class TwoMenuPhraseVs extends StatefulWidget {
@@ -137,7 +139,7 @@ class _TwoMenuPhraseVsState extends State<TwoMenuPhraseVs> {
                               );
                             } else {
                               return GestureDetector(
-                                onTap: () => Get.to(ListPhrasesFlip(),
+                                onTap: () => Get.to(ListPhrases(),
                                     arguments: [
                                       this.records[index]['fields']['go_tbl'],
                                       this.records[index]['fields']['go_view'],
@@ -174,7 +176,7 @@ class _TwoMenuPhraseVsState extends State<TwoMenuPhraseVs> {
                                           ),
                                           Divider(indent: 16),
                                           Container(
-                                            width: 280,
+                                            width: 200,
                                             child: Text(
                                               this
                                                   .records[index]['fields']

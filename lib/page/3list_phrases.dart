@@ -1,10 +1,12 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:easy_rich_text/easy_rich_text.dart';
 
-class ListPhrases1 extends StatelessWidget {
+class ListPhrases extends StatelessWidget {
   List records = [];
 
   Future _fetchMenus() async {
@@ -61,14 +63,17 @@ class ListPhrases1 extends StatelessWidget {
               ));
             else {
               return PageView.builder(
-                controller: PageController(viewportFraction: 0.8),
+                controller: PageController(viewportFraction: 0.85),
                 itemCount: this.records.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CardWidget(
+                      'assets/images/012.png',
                       this.records[index]['fields']['eng'],
+                      this.records[index]['fields']['engc'],
                       this.records[index]['fields']['kor'],
+                      this.records[index]['fields']['korc'],
                       this.records[index]['fields']['jap'],
-                      'assets/images/012.png');
+                      this.records[index]['fields']['japc']);
                 },
               );
             }
@@ -79,11 +84,15 @@ class ListPhrases1 extends StatelessWidget {
 
 class CardWidget extends StatelessWidget {
   final String _localImage;
-  final String texteng;
-  final String textkor;
-  final String textjap;
+  final String? texteng;
+  final String? textengc;
+  final String? textkor;
+  final String? textkorc;
+  final String? textjap;
+  final String? textjapc;
 
-  CardWidget(this.texteng, this.textkor, this.textjap, this._localImage);
+  CardWidget(this._localImage, this.texteng, this.textengc, this.textkor,
+      this.textkorc, this.textjap, this.textjapc);
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +157,7 @@ class CardWidget extends StatelessWidget {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(left: 10),
-          child: Column(
+          child: Row(
             children: <Widget>[
               Text('16',
                   style: TextStyle(
@@ -161,7 +170,7 @@ class CardWidget extends StatelessWidget {
           ),
         ),
         Container(
-          child: Icon(Icons.favorite, color: Colors.white, size: 50),
+          child: Icon(Icons.favorite, color: Colors.white, size: 30),
           margin: EdgeInsets.only(right: 10),
         )
       ],
@@ -180,42 +189,44 @@ class CardWidget extends StatelessWidget {
           ),
         ),
       ),
-      tag: texteng,
+      tag: texteng!,
     );
   }
 
   Widget _phraseDisplay() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(bottom: 30, left: 20),
-      child: Column(
-        children: [
-          Text(
-            texteng,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-          Text(
-            textkor,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-          Text(
-            textjap,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-          Text(
-            texteng,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-          Text(
-            textkor,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-          Text(
-            textjap,
-            style: TextStyle(color: Colors.black87, fontSize: 24),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        EasyRichText(texteng!,
+            defaultStyle: TextStyle(fontSize: 20, color: Colors.grey),
+            patternList: [
+              EasyRichTextPattern(
+                targetString: textengc ?? '',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ]),
+        Divider(
+          height: 20,
+        ),
+        EasyRichText(textkor!,
+            defaultStyle: TextStyle(fontSize: 20, color: Colors.grey),
+            patternList: [
+              EasyRichTextPattern(
+                targetString: textkorc ?? '',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ]),
+        Divider(
+          height: 20,
+        ),
+        EasyRichText(textjap!,
+            defaultStyle: TextStyle(fontSize: 20, color: Colors.grey),
+            patternList: [
+              EasyRichTextPattern(
+                targetString: textjapc ?? '',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ]),
+      ],
     );
   }
 }
